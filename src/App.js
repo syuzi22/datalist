@@ -1,9 +1,27 @@
-import './App.css';
+import UserList from './UserList';
+import { connect } from 'react-redux';
+import { loadUsers } from './redux/actions.js';
 
-function App() {
+const App = ({ loadUsers, users }) => {
   return (
-    <h1>Hello</h1>
-  );
+      <>
+        <h1>React datalist</h1>
+        <button onClick={loadUsers}>Load</button>
+        <UserList users={users}/>
+      </>
+    );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return ({
+    users: Object.values(state.users)
+  });
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUsers: () => dispatch(loadUsers())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
