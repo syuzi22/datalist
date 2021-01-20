@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const UserData = ({firstName, lastName, message, timestamp}) => {
+const UserData = ({firstName, lastName, message, timestamp, rowHeight}) => {
     return (
-        <tr>
+        <tr style={{ height: rowHeight }}>
             <td>{firstName}</td>
             <td>{lastName}</td>
             <td>{message}</td>
@@ -11,4 +12,10 @@ const UserData = ({firstName, lastName, message, timestamp}) => {
     );
 };
 
-export default UserData;
+const mapStateToProps = (state) => {
+    return ({
+        rowHeight: state.params.rowHeight
+    });
+}
+
+export default connect(mapStateToProps)(UserData);

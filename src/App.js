@@ -2,11 +2,15 @@ import UserList from './UserList';
 import { connect } from 'react-redux';
 import { loadUsers } from './redux/actions.js';
 
-const App = ({ loadUsers, users }) => {
+const App = ({ loaded, loadUsers, users }) => {
+
+  if (!loaded) {
+    loadUsers();
+  }
+
   return (
       <>
         <h1>React datalist</h1>
-        <button onClick={loadUsers}>Load</button>
         <UserList users={users}/>
       </>
     );
@@ -14,6 +18,7 @@ const App = ({ loadUsers, users }) => {
 
 const mapStateToProps = (state) => {
   return ({
+    loaded: state.status.loaded,
     users: Object.values(state.users)
   });
 }
