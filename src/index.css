@@ -28,3 +28,12 @@ th, td {
 button {
   cursor: pointer;
 }
+.sort__arrow {
+  user-select: none;
+}
+.sort__arrow_asc::after {
+  content: '\25BC'
+}
+.sort__arrow_desc::after {
+  content: '\25B2'
+}

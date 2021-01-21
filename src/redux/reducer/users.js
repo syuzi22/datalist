@@ -5,9 +5,10 @@ const arrToMap = (arr) =>  arr.reduce((acc, item) => ({ ...acc, [item.id]: item 
 const reducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_USERS:
+            const users = arrToMap(action.response.map(user => ({...user, millis: Date.parse(user.timestamp)})));
             return {
                 ...state,
-                ...arrToMap(action.response)
+                ...users,
             };
         default:
             return state;

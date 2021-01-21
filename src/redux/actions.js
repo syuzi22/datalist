@@ -1,4 +1,4 @@
-import { LOAD_USERS, START_FETCHING, LOAD_ERROR } from './constants';
+import { LOAD_USERS, START_FETCHING, LOAD_ERROR, SORT_ASC, SORT_DESC } from './constants';
 
 export const loadUsers = () => async (dispatch, getState) => {
 
@@ -30,3 +30,11 @@ export const loadUsers = () => async (dispatch, getState) => {
     }
 
 };
+
+export const sortASC = () => ({
+    type: SORT_ASC
+});
+
+export const sortDESC = () => ({
+    type: SORT_DESC
+});
