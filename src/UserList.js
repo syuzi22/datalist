@@ -8,6 +8,8 @@ const UserList = ({users, rowHeight, visibleRows}) => {
     const rootRef = React.useRef();
     const [start, setStart] = React.useState(0);
 
+    const [inputValue, setInputValue] = React.useState('')
+
     function getTopHeight() {
         return rowHeight * start;
     }
@@ -17,6 +19,10 @@ const UserList = ({users, rowHeight, visibleRows}) => {
 
     const downClickHandler = () => {
         rootRef.current.scrollTop = rootRef.current.scrollHeight;
+    };
+
+    const inputHandler = (e) => {
+        setInputValue(e.target.value)
     };
 
     React.useLayoutEffect(() => {
@@ -38,11 +44,13 @@ const UserList = ({users, rowHeight, visibleRows}) => {
         <div>
             { (start < users.length - visibleRows - 1) ? <Down handler={downClickHandler}/> :  ''}
 
+            <input value={inputValue} onChange={inputHandler} placeholder="Filter" />
+
             <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
                 <div style={{ height: getTopHeight() }}></div>
                 <table>
                     <tbody >
-                        {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
+                        {users.filter(user => user.firstName.indexOf(inputValue) !== -1 || user.lastName.indexOf(inputValue) !== -1).slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
                     </tbody>
                 </table>
                 <div style={{ height: getBottomHeight() }}></div>
