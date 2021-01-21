@@ -10,11 +10,17 @@ const UserList = ({users, rowHeight, visibleRows}) => {
 
     const [inputValue, setInputValue] = React.useState('')
 
-    function getTopHeight() {
+    const filterUsers = (users) => {
+        return users.filter(user => user.firstName.indexOf(inputValue) !== -1 || user.lastName.indexOf(inputValue) !== -1);
+    };
+
+    const getTopHeight = () => {
         return rowHeight * start;
     }
-    function getBottomHeight() {
-        return rowHeight * (users.length - (start + visibleRows + 1));
+
+    const getBottomHeight = () => {
+        const k = filterUsers(users).length - (start + visibleRows + 1);
+        return rowHeight * Math.max(0, k);
     }
 
     const downClickHandler = () => {
@@ -24,6 +30,8 @@ const UserList = ({users, rowHeight, visibleRows}) => {
     const inputHandler = (e) => {
         setInputValue(e.target.value)
     };
+
+
 
     React.useLayoutEffect(() => {
         const rootRefCurrent = rootRef.current;
@@ -50,7 +58,7 @@ const UserList = ({users, rowHeight, visibleRows}) => {
                 <div style={{ height: getTopHeight() }}></div>
                 <table>
                     <tbody >
-                        {users.filter(user => user.firstName.indexOf(inputValue) !== -1 || user.lastName.indexOf(inputValue) !== -1).slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
+                        {filterUsers(users).slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
                     </tbody>
                 </table>
                 <div style={{ height: getBottomHeight() }}></div>
