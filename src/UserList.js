@@ -3,17 +3,18 @@ import UserData from './UserData';
 import { connect } from 'react-redux';
 import Down from './DownButton';
 import Sort from './Sort';
-import { SORT_ASC, SORT_ASC_ORDER, SORT_DESC_ORDER } from './redux/constants.js';
+import { SORT_ASC_ORDER } from './redux/constants.js';
 
 const UserList = ({users, rowHeight, visibleRows, dateSort}) => {
 
     const rootRef = React.useRef();
     const [start, setStart] = React.useState(0);
-
     const [inputValue, setInputValue] = React.useState('')
 
     const filterUsers = (users) => {
-        return users.filter(user => user.firstName.indexOf(inputValue) !== -1 || user.lastName.indexOf(inputValue) !== -1);
+        const inputLowercase = inputValue.toLowerCase();
+        return users.filter(user => user.firstName.toLowerCase().indexOf(inputLowercase) !== -1
+            || user.lastName.toLowerCase().indexOf(inputLowercase) !== -1);
     };
 
     const sortUsers = (users) => {
@@ -23,9 +24,8 @@ const UserList = ({users, rowHeight, visibleRows, dateSort}) => {
         users.sort((a, b) => {
             if (dateSort === SORT_ASC_ORDER) {
                 return a.millis - b.millis;
-            } else {
-                return b.millis - a.millis;
             }
+            return b.millis - a.millis;
         })
         return users;
     };
@@ -47,8 +47,6 @@ const UserList = ({users, rowHeight, visibleRows, dateSort}) => {
         setInputValue(e.target.value)
     };
 
-
-
     React.useLayoutEffect(() => {
         const rootRefCurrent = rootRef.current;
         function onScroll(e) {
@@ -65,26 +63,34 @@ const UserList = ({users, rowHeight, visibleRows, dateSort}) => {
     }, [users.length, visibleRows, rowHeight]);
 
     return (
-        <div>
-            { (start < users.length - visibleRows - 1) ? <Down handler={downClickHandler}/> :  ''}
-
-            <input value={inputValue} onChange={inputHandler} placeholder="Filter" />
-
-            <Sort />
-
-
+        <div className="user_list">
+            <div className="user_list__controls">
+                <input value={inputValue} onChange={inputHandler} placeholder="Filter" />
+                <div className="user_list__controls_r">
+                    { (start < users.length - visibleRows - 1) ? <Down handler={downClickHandler}/> :  ''}
+                    <Sort />
+                </div>
+            </div>
             <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
                 <div style={{ height: getTopHeight() }}></div>
                 <table>
                     <tbody >
-                        {sortUsers(filterUsers(users)).slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
+                        {sortUsers(filterUsers(users)).slice(start, start + visibleRows + 1)
+                            .map(user =>
+                            <UserData
+                                key={user.id}
+                                id={user.id}
+                                firstName={user.firstName}
+                                lastName={user.lastName}
+                                message={user.message}
+                                timestamp={user.timestamp}
+                            />)}
                     </tbody>
                 </table>
                 <div style={{ height: getBottomHeight() }}></div>
             </div>
         </div>
     );
-
 }
 
 const mapStateToProps = (state) => {

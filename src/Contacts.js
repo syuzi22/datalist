@@ -1,19 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Contacts = ({id, show, email, tel}) => {
-
+const Contacts = ({email, tel}) => {
     return (
-        <>
-            {show ?
-                <div style={{zIndex: 10, position: 'absolute', top: 0, backgroundColor: '#ededed'}}>
-                    <div>{email}</div>
-                    <div>{tel}</div>
-                </div> :
-                <div />
-            }
-
-        </>
+        <div className="user_list__tooltip">
+            <span>Email: {email}</span>{' '}
+            <span>Phone: {tel}</span>
+        </div>
     );
 };
 

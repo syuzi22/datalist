@@ -6,7 +6,7 @@ import { loadUsers } from './redux/actions.js';
 const App = ({ loaded, loadUsers, error, users, isFetching }) => {
 
 if (error) {
-  return (<div>К сожалению, информация не найдена</div>);
+  return (<div>Information not found</div>);
 }
 
 if (!loaded) {

@@ -11,12 +11,11 @@ const Sort = ({sortASC, sortDESC, dateSort}) => {
             sortASC();
         }
     }
-
     return (
-        <div className="sort">
-            Sort by:
-            <span style={{cursor: 'pointer'}} className={`sort__arrow sort__arrow_${ dateSort }`} onClick={clickHandler}>Date</span>
-        </div>
+        <span className="sort">
+            Sort by:{' '}
+            <b style={{cursor: 'pointer'}} className={`sort__arrow sort__arrow_${ dateSort }`} onClick={clickHandler}>Date</b>
+        </span>
     );
 };
 

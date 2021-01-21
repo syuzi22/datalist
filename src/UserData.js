@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import Contacts from './Contacts';
 
 const UserData = ({id, firstName, lastName, message, timestamp, rowHeight}) => {
-
-    const [showContacts, changeContactsVisability ] = React.useState(false);
-
     const date = new Date(timestamp);
-
     return (
-        <tr style={{ height: rowHeight, cursor: 'pointer' }} onMouseOver={() => changeContactsVisability(true)} onMouseOut={() => changeContactsVisability(false)}>
-            <td>{firstName}</td>
-            <td>{lastName}</td>
-            <td style={{position: 'relative'}}>{message}<Contacts id={id} show={showContacts}/></td>
-            <td>{date.toLocaleDateString()}</td>
+        <tr className="user_list__row" style={{ height: rowHeight }} >
+            <td className="user_list__cell user_list__cell__name">
+                {firstName} {lastName}
+                <Contacts id={id}/>
+            </td>
+            <td className="user_list__cell user_list__cell__ellipsis user_list__cell__messsage">
+                {message}
+            </td>
+            <td className="user_list__cell user_list__cell__time">
+                {date.toLocaleDateString()}
+            </td>
         </tr>
     );
 };
