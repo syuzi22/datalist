@@ -42,7 +42,7 @@ const UserList = ({users, rowHeight, visibleRows}) => {
                     </tr>
                 </thead>
                 <tbody >
-                    {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
+                    {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
                 </tbody>
             </table>
             <div style={{ height: getBottomHeight() }}></div>
