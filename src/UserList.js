@@ -14,33 +14,34 @@ const UserList = ({users, rowHeight, visibleRows}) => {
         return rowHeight * (users.length - (start + visibleRows + 1));
     }
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
+        const rootRefCurrent = rootRef.current;
         function onScroll(e) {
-        setStart(Math.min(
-            users.length - visibleRows - 1,
-            Math.floor(e.target.scrollTop / rowHeight)
-        ));
-        }
-        rootRef.current.addEventListener('scroll', onScroll);
+            setStart(Math.min(
+                users.length - visibleRows - 1,
+                Math.floor(e.target.scrollTop / rowHeight)
+            ));
+            }
+            rootRefCurrent.addEventListener('scroll', onScroll);
 
-        // return () => {
-        // rootRef.current.removeEventListener('scroll', onScroll);
-        // }
+            return () => {
+                rootRefCurrent.removeEventListener('scroll', onScroll);
+            }
     }, [users.length, visibleRows, rowHeight]);
 
     return (
         <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
             <div style={{ height: getTopHeight() }}></div>
             <table>
-                {/* <thead>
-                    <tr>
+                <thead>
+                    <tr style={{ height: rowHeight}}>
                         <th>FirstName</th>
                         <th>LastName</th>
                         <th>Message</th>
                         <th>TimeStamp</th>
                     </tr>
-                </thead> */}
-                <tbody>
+                </thead>
+                <tbody >
                     {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
                 </tbody>
             </table>
