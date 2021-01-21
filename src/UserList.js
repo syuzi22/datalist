@@ -1,6 +1,7 @@
 import React from 'react';
 import UserData from './UserData';
 import { connect } from 'react-redux';
+import Down from './DownButton';
 
 const UserList = ({users, rowHeight, visibleRows}) => {
 
@@ -13,6 +14,10 @@ const UserList = ({users, rowHeight, visibleRows}) => {
     function getBottomHeight() {
         return rowHeight * (users.length - (start + visibleRows + 1));
     }
+
+    const downClickHandler = () => {
+        rootRef.current.scrollTop = rootRef.current.scrollHeight;
+    };
 
     React.useLayoutEffect(() => {
         const rootRefCurrent = rootRef.current;
@@ -30,22 +35,26 @@ const UserList = ({users, rowHeight, visibleRows}) => {
     }, [users.length, visibleRows, rowHeight]);
 
     return (
-        <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
-            <div style={{ height: getTopHeight() }}></div>
-            <table>
-                <thead>
-                    <tr style={{ height: rowHeight}}>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Message</th>
-                        <th>TimeStamp</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
-                </tbody>
-            </table>
-            <div style={{ height: getBottomHeight() }}></div>
+        <div>
+            { (start < users.length - visibleRows - 1) ? <Down handler={downClickHandler}/> :  ''}
+
+            <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
+                <div style={{ height: getTopHeight() }}></div>
+                <table>
+                    <thead>
+                        <tr style={{ height: rowHeight}}>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Message</th>
+                            <th>TimeStamp</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
+                    </tbody>
+                </table>
+                <div style={{ height: getBottomHeight() }}></div>
+            </div>
         </div>
     );
 }
