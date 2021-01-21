@@ -14,7 +14,7 @@ const UserData = ({firstName, lastName, message, timestamp, rowHeight}) => {
 
 const mapStateToProps = (state) => {
     return ({
-        rowHeight: state.params.rowHeight
+        rowHeight: state.params.rowHeight,
     });
 }
 

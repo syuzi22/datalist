@@ -23,9 +23,9 @@ const UserList = ({users, rowHeight, visibleRows}) => {
         }
         rootRef.current.addEventListener('scroll', onScroll);
 
-        return () => {
-        rootRef.current.removeEventListener('scroll', onScroll);
-        }
+        // return () => {
+        // rootRef.current.removeEventListener('scroll', onScroll);
+        // }
     }, [users.length, visibleRows, rowHeight]);
 
     return (
