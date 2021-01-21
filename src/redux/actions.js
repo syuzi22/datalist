@@ -1,4 +1,4 @@
-import { LOAD_USERS, START_FETCHING } from './constants';
+import { LOAD_USERS, START_FETCHING, LOAD_ERROR } from './constants';
 
 export const loadUsers = () => async (dispatch, getState) => {
 
@@ -10,10 +10,23 @@ export const loadUsers = () => async (dispatch, getState) => {
     }
 
     const response = await fetch('/large')
-        .then((res) => res.json());
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }else {
+                return null;
+            }
+    });
 
-    dispatch({
-        type: LOAD_USERS,
-        response
-    })
+    if (!response) {
+        dispatch({
+            type: LOAD_ERROR,
+        })
+    } else {
+        dispatch({
+            type: LOAD_USERS,
+            response
+        })
+    }
+
 };

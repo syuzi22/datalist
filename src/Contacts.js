@@ -6,7 +6,7 @@ const Contacts = ({id, show, email, tel}) => {
     return (
         <>
             {show ?
-                <div style={{zIndex: 10, position: 'absolute', left: '50%', backgroundColor: '#ededed'}}>
+                <div style={{zIndex: 10, position: 'absolute', top: 0, backgroundColor: '#ededed'}}>
                     <div>{email}</div>
                     <div>{tel}</div>
                 </div> :

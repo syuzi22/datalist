@@ -1,8 +1,9 @@
-import { LOAD_USERS,  START_FETCHING} from './../constants';
+import { LOAD_USERS,  START_FETCHING, LOAD_ERROR} from './../constants';
 
 const initialState = {
     loaded: false,
-    isFetching: false
+    isFetching: false,
+    error: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loaded: true,
                 isFetching: false
+            };
+        case LOAD_ERROR:
+            return {
+                ...state,
+                error: true
             };
         default:
             return state;

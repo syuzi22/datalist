@@ -41,14 +41,6 @@ const UserList = ({users, rowHeight, visibleRows}) => {
             <div style={{ height: rowHeight * visibleRows + 1, overflow: 'auto' }} ref={rootRef}>
                 <div style={{ height: getTopHeight() }}></div>
                 <table>
-                    <thead>
-                        <tr style={{ height: rowHeight}}>
-                            <th>FirstName</th>
-                            <th>LastName</th>
-                            <th>Message</th>
-                            <th>TimeStamp</th>
-                        </tr>
-                    </thead>
                     <tbody >
                         {users.slice(start, start + visibleRows + 1).map(user => <UserData key={user.id} id={user.id} firstName={user.firstName} lastName={user.lastName} message={user.message} timestamp={user.timestamp}/>)}
                     </tbody>
@@ -57,6 +49,7 @@ const UserList = ({users, rowHeight, visibleRows}) => {
             </div>
         </div>
     );
+
 }
 
 const mapStateToProps = (state) => {

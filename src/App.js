@@ -3,7 +3,11 @@ import UserList from './UserList';
 import { connect } from 'react-redux';
 import { loadUsers } from './redux/actions.js';
 
-const App = ({ loaded, loadUsers, users, isFetching }) => {
+const App = ({ loaded, loadUsers, error, users, isFetching }) => {
+
+if (error) {
+  return (<div>К сожалению, информация не найдена</div>);
+}
 
 if (!loaded) {
   loadUsers();
@@ -21,6 +25,7 @@ const mapStateToProps = (state) => {
   return ({
     loaded: state.status.loaded,
     isFetching: state.status.isFetching,
+    error: state.status.error,
     users: Object.values(state.users)
   });
 }
