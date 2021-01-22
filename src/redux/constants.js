@@ -5,3 +5,4 @@ export const SORT_ASC = 'SORT_ASC';
 export const SORT_DESC = 'SORT_DESC';
 export const SORT_ASC_ORDER = 'asc';
 export const SORT_DESC_ORDER = 'desc';
+export const API_BASE_URI = 'http://www.filltext.com';
