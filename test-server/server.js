@@ -3,8 +3,8 @@ const largeResponse = require('./responses/large.js')
 const smallResponse = require('./responses/small.js')
 const express = require('express')
 
-const PORT = process.env.PORT ?? 3001
-const HOST = process.env.HOST ?? 'localhost'
+const PORT = process.env.PORT !== undefined ? process.env.PORT : 3001
+const HOST = process.env.HOST !== undefined ? process.env.HOST : 'localhost'
 
 const app = express()
 
