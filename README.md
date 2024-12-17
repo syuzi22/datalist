@@ -1,8 +1,6 @@
-## Тестовое задание на позицию Frontend разработчик
+## Test task
 
-React-приложение для отображения данных в виде списка.
-
-## Запуск приложения:
+React application that displays data in a list.
 
 ```sh
 npm run start
